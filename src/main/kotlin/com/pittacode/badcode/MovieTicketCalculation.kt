@@ -1,6 +1,8 @@
 package com.pittacode.badcode
 
 import java.time.DayOfWeek
+import java.time.DayOfWeek.TUESDAY
+import java.time.DayOfWeek.WEDNESDAY
 import kotlin.math.ceil
 
 private const val WEEKEND_BASE_PRICE = 50.0
@@ -34,8 +36,12 @@ private fun MovieTicketRequest.isOnWeekend(): Boolean {
 }
 
 private fun calculateReductionBasedOnDay(request: MovieTicketRequest): Int {
-    return if (request.date.dayOfWeek == DayOfWeek.TUESDAY || request.date.dayOfWeek == DayOfWeek.WEDNESDAY) 25
+    return if (request.isOnDay(TUESDAY, WEDNESDAY)) 25
     else 0
+}
+
+private fun MovieTicketRequest.isOnDay(vararg days: DayOfWeek): Boolean {
+    return date.dayOfWeek in days
 }
 
 data class MovieTicketRequest(val age: Int, val date: Date)
