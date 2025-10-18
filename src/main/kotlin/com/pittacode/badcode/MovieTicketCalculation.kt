@@ -15,7 +15,7 @@ fun calculateTicketPrice(request: MovieTicketRequest): Double {
 
     val reduction = calculateReductionBasedOnDay(request)
 
-    if (request.age < 10) {
+    if (request.isForChild()) {
         if (request.isOnWeekend()) {
             basePrice /= 2
         }
@@ -32,6 +32,10 @@ private fun calculateBasePriceBasedOnDay(request: MovieTicketRequest): Double {
 
 private fun MovieTicketRequest.isOnWeekend(): Boolean {
     return isOnDay(SATURDAY, SUNDAY)
+}
+
+private fun MovieTicketRequest.isForChild(): Boolean {
+    return age < 10
 }
 
 private fun calculateReductionBasedOnDay(request: MovieTicketRequest): Int {
