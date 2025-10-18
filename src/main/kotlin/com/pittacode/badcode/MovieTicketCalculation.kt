@@ -7,14 +7,15 @@ import java.time.DayOfWeek.TUESDAY
 import java.time.DayOfWeek.WEDNESDAY
 import kotlin.math.ceil
 
-private const val WEEKEND_BASE_PRICE = 50.0
+// Base prices
 private const val WEEKDAY_BASE_PRICE = 40.0
+private const val WEEKEND_BASE_PRICE = 50.0
 
-private const val CHILD_DISCOUNT_FACTOR = 0.5
-private const val MAX_CHILD_AGE = 10
-
+// Discounts
 private const val DISCOUNT_RATE = 0.25
 private const val NO_DISCOUNT = 1.0
+private const val CHILD_DISCOUNT_FACTOR = 0.5
+private const val MAX_CHILD_AGE = 10
 
 fun calculateTicketPrice(request: MovieTicketRequest): Double {
     val basePrice = calculateBasePrice(request)
@@ -26,8 +27,9 @@ private fun calculateBasePrice(request: MovieTicketRequest): Double {
     return if (request.isOnWeekend()) {
         if (request.isForChild()) WEEKEND_BASE_PRICE * CHILD_DISCOUNT_FACTOR
         else WEEKEND_BASE_PRICE
+    } else {
+        WEEKDAY_BASE_PRICE
     }
-    else WEEKDAY_BASE_PRICE
 }
 
 private fun MovieTicketRequest.isOnWeekend(): Boolean {
