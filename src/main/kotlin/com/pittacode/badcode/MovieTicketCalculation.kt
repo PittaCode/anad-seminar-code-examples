@@ -3,11 +3,14 @@ package com.pittacode.badcode
 import java.time.DayOfWeek
 import kotlin.math.ceil
 
+private const val WEEKEND_BASE_PRICE = 50.0
+private const val WEEKDAY_BASE_PRICE = 40.0
+
 fun calculateTicketPrice(request: MovieTicketRequest): Double {
-    var basePrice = 40.0
+    var basePrice = WEEKEND_BASE_PRICE
 
     if (request.isOnWeekend()) {
-        basePrice = 50.0
+        basePrice = WEEKDAY_BASE_PRICE
     }
 
     var reduction = 0
