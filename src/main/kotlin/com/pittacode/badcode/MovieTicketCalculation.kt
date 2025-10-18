@@ -1,6 +1,8 @@
 package com.pittacode.badcode
 
 import java.time.DayOfWeek
+import java.time.DayOfWeek.SATURDAY
+import java.time.DayOfWeek.SUNDAY
 import java.time.DayOfWeek.TUESDAY
 import java.time.DayOfWeek.WEDNESDAY
 import kotlin.math.ceil
@@ -32,7 +34,7 @@ private fun calculateBasePriceBasedOnDay(request: MovieTicketRequest): Double {
 }
 
 private fun MovieTicketRequest.isOnWeekend(): Boolean {
-    return date.dayOfWeek == DayOfWeek.SATURDAY || date.dayOfWeek == DayOfWeek.SUNDAY
+    return isOnDay(SATURDAY, SUNDAY)
 }
 
 private fun calculateReductionBasedOnDay(request: MovieTicketRequest): Int {
