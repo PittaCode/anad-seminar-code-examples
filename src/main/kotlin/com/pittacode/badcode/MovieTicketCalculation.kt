@@ -7,11 +7,7 @@ private const val WEEKEND_BASE_PRICE = 50.0
 private const val WEEKDAY_BASE_PRICE = 40.0
 
 fun calculateTicketPrice(request: MovieTicketRequest): Double {
-    var basePrice = WEEKEND_BASE_PRICE
-
-    if (request.isOnWeekend()) {
-        basePrice = WEEKDAY_BASE_PRICE
-    }
+    var basePrice = calculateBasePriceBasedOnDay(request)
 
     var reduction = 0
     if (request.date.dayOfWeek == DayOfWeek.TUESDAY || request.date.dayOfWeek == DayOfWeek.WEDNESDAY) {
@@ -29,6 +25,11 @@ fun calculateTicketPrice(request: MovieTicketRequest): Double {
 
     val finalPrice = basePrice * (1 - reduction / 100.0)
     return ceil(finalPrice)
+}
+
+private fun calculateBasePriceBasedOnDay(request: MovieTicketRequest): Double {
+    return if (request.isOnWeekend()) WEEKEND_BASE_PRICE
+    else WEEKDAY_BASE_PRICE
 }
 
 private fun MovieTicketRequest.isOnWeekend(): Boolean {
