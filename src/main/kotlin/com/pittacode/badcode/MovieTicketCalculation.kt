@@ -6,7 +6,7 @@ import kotlin.math.ceil
 fun calculateTicketPrice(request: MovieTicketRequest): Double {
     var basePrice = 40.0
 
-    if (request.date.dayOfWeek == DayOfWeek.SATURDAY || request.date.dayOfWeek == DayOfWeek.SUNDAY) {
+    if (request.isOnWeekend()) {
         basePrice = 50.0
     }
 
@@ -16,7 +16,7 @@ fun calculateTicketPrice(request: MovieTicketRequest): Double {
     }
 
     if (request.age < 10) {
-        if (request.date.dayOfWeek == DayOfWeek.SATURDAY || request.date.dayOfWeek == DayOfWeek.SUNDAY) {
+        if (request.isOnWeekend()) {
             basePrice /= 2
         }
 
@@ -26,6 +26,10 @@ fun calculateTicketPrice(request: MovieTicketRequest): Double {
 
     val finalPrice = basePrice * (1 - reduction / 100.0)
     return ceil(finalPrice)
+}
+
+private fun MovieTicketRequest.isOnWeekend(): Boolean {
+    return date.dayOfWeek == DayOfWeek.SATURDAY || date.dayOfWeek == DayOfWeek.SUNDAY
 }
 
 data class MovieTicketRequest(val age: Int, val date: Date)
