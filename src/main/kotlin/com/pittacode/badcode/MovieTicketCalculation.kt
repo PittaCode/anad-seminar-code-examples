@@ -19,9 +19,6 @@ fun calculateTicketPrice(request: MovieTicketRequest): Double {
         if (request.isOnWeekend()) {
             basePrice /= 2
         }
-
-        val finalPriceChildren = basePrice * (1 - reduction / 100.0)
-        return ceil(basePrice)
     }
 
     val finalPrice = basePrice * (1 - reduction / 100.0)
