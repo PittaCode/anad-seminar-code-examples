@@ -13,12 +13,12 @@ private const val WEEKDAY_BASE_PRICE = 40.0
 fun calculateTicketPrice(request: MovieTicketRequest): Double {
     var basePrice = calculateBasePriceBasedOnDay(request)
 
-    val reduction = calculateReductionBasedOnDay(request)
 
     if (request.isForChild() && request.isOnWeekend()) {
         basePrice /= 2
     }
 
+    val reduction = calculateReductionBasedOnDay(request)
     val finalPrice = basePrice * (1 - reduction / 100.0)
     return ceil(finalPrice)
 }
