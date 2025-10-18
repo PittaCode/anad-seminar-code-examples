@@ -13,10 +13,13 @@ private const val WEEKDAY_BASE_PRICE = 40.0
 private const val CHILDREN_DISCOUNT_FACTOR = 0.5
 private const val MAX_CHILD_AGE = 10
 
+private const val DISCOUNT_RATE = 0.25
+private const val NO_DISCOUNT = 1.0
+
 fun calculateTicketPrice(request: MovieTicketRequest): Double {
     val basePrice = calculateBasePriceBasedOnDayAndAge(request)
-    val discountRate = calculateDiscountRateBasedOnDay(request)
-    val finalPrice = basePrice * (1 - discountRate)
+    val discountFactor = calculateDiscountFactorBasedOnDay(request)
+    val finalPrice = basePrice * discountFactor
     return ceil(finalPrice)
 }
 
@@ -36,9 +39,9 @@ private fun MovieTicketRequest.isForChild(): Boolean {
     return age < MAX_CHILD_AGE
 }
 
-private fun calculateDiscountRateBasedOnDay(request: MovieTicketRequest): Double {
-    return if (request.isOnDay(TUESDAY, WEDNESDAY)) 0.25
-    else 0.0
+private fun calculateDiscountFactorBasedOnDay(request: MovieTicketRequest): Double {
+    return if (request.isOnDay(TUESDAY, WEDNESDAY)) 1 - DISCOUNT_RATE
+    else NO_DISCOUNT
 }
 
 private fun MovieTicketRequest.isOnDay(vararg days: DayOfWeek): Boolean {
