@@ -23,32 +23,26 @@ fun calculateTicketPrice(request: MovieTicketRequest): Double {
     return ceil(basePrice * discountFactor)
 }
 
-private fun calculateBasePrice(request: MovieTicketRequest): Double {
-    return if (request.isOnWeekend()) WEEKEND_BASE_PRICE
+private fun calculateBasePrice(request: MovieTicketRequest): Double =
+    if (request.isOnWeekend()) WEEKEND_BASE_PRICE
     else WEEKDAY_BASE_PRICE
-}
 
-private fun calculateDiscountFactor(request: MovieTicketRequest): Double {
-    return 1 - calculateDiscountRate(request)
-}
+private fun calculateDiscountFactor(request: MovieTicketRequest): Double =
+    1 - calculateDiscountRate(request)
 
-private fun calculateDiscountRate(request: MovieTicketRequest): Double {
-    return if (request.isOnDay(TUESDAY, WEDNESDAY)) DISCOUNT_RATE
+private fun calculateDiscountRate(request: MovieTicketRequest): Double =
+    if (request.isOnDay(TUESDAY, WEDNESDAY)) DISCOUNT_RATE
     else if (request.isOnWeekend() && request.isForChild()) CHILD_DISCOUNT_RATE
     else NO_DISCOUNT
-}
 
-private fun MovieTicketRequest.isOnWeekend(): Boolean {
-    return isOnDay(SATURDAY, SUNDAY)
-}
+private fun MovieTicketRequest.isOnWeekend(): Boolean =
+    isOnDay(SATURDAY, SUNDAY)
 
-private fun MovieTicketRequest.isOnDay(vararg days: DayOfWeek): Boolean {
-    return date.dayOfWeek in days
-}
+private fun MovieTicketRequest.isOnDay(vararg days: DayOfWeek): Boolean =
+    date.dayOfWeek in days
 
-private fun MovieTicketRequest.isForChild(): Boolean {
-    return age < MAX_CHILD_AGE
-}
+private fun MovieTicketRequest.isForChild(): Boolean =
+    age < MAX_CHILD_AGE
 
 data class MovieTicketRequest(val age: Int, val date: Date)
 data class Date(val dayOfWeek: DayOfWeek)
