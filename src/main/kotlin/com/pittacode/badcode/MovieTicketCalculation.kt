@@ -41,9 +41,12 @@ private fun MovieTicketRequest.isForChild(): Boolean {
 }
 
 private fun calculateDiscountFactor(request: MovieTicketRequest): Double {
-    val discountRate = if (request.isOnDay(TUESDAY, WEDNESDAY)) DISCOUNT_RATE
+    return 1 - calculateDiscountRate(request)
+}
+
+private fun calculateDiscountRate(request: MovieTicketRequest): Double {
+    return if (request.isOnDay(TUESDAY, WEDNESDAY)) DISCOUNT_RATE
     else NO_DISCOUNT
-    return 1 - discountRate
 }
 
 private fun MovieTicketRequest.isOnDay(vararg days: DayOfWeek): Boolean {
