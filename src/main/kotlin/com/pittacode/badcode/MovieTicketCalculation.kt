@@ -13,8 +13,8 @@ private const val WEEKEND_BASE_PRICE = 50.0
 
 // Discounts
 private const val DISCOUNT_RATE = 0.25
+private const val CHILD_DISCOUNT_RATE = 0.5
 private const val NO_DISCOUNT = 0.0
-private const val CHILD_DISCOUNT_FACTOR = 0.5
 private const val MAX_CHILD_AGE = 10
 
 fun calculateTicketPrice(request: MovieTicketRequest): Double {
@@ -24,12 +24,8 @@ fun calculateTicketPrice(request: MovieTicketRequest): Double {
 }
 
 private fun calculateBasePrice(request: MovieTicketRequest): Double {
-    return if (request.isOnWeekend()) {
-        if (request.isForChild()) WEEKEND_BASE_PRICE * CHILD_DISCOUNT_FACTOR
-        else WEEKEND_BASE_PRICE
-    } else {
-        WEEKDAY_BASE_PRICE
-    }
+    return if (request.isOnWeekend()) WEEKEND_BASE_PRICE
+    else WEEKDAY_BASE_PRICE
 }
 
 private fun MovieTicketRequest.isOnWeekend(): Boolean {
@@ -46,6 +42,7 @@ private fun calculateDiscountFactor(request: MovieTicketRequest): Double {
 
 private fun calculateDiscountRate(request: MovieTicketRequest): Double {
     return if (request.isOnDay(TUESDAY, WEDNESDAY)) DISCOUNT_RATE
+    else if (request.isOnWeekend() && request.isForChild()) CHILD_DISCOUNT_RATE
     else NO_DISCOUNT
 }
 
